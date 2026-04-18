@@ -3,154 +3,60 @@
 <head>
     <title>⚠️ HACK DETECTADO ⚠️</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
             background: black;
             font-family: 'Courier New', monospace;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            height: 100vh;
+            margin: 0;
         }
         
-        /* Tela de fundo estilo Matrix */
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #000000 0%, #001100 100%);
-            z-index: -1;
-        }
-        
-        /* Caixa de diálogo estilo hacker */
         .hack-box {
             background: #0a0a0a;
             border: 2px solid #00ff00;
             border-radius: 10px;
-            width: 450px;
+            padding: 30px;
+            text-align: center;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-            animation: pulse 1s infinite;
         }
         
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.7); }
-            100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
-        }
-        
-        /* Título da janela */
-        .window-title {
-            background: #001a00;
-            padding: 10px 15px;
-            border-bottom: 1px solid #00ff00;
-            display: flex;
-            justify-content: space-between;
-            cursor: move;
-        }
-        
-        .window-title span {
+        h1 {
             color: #00ff00;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .close-btn {
-            color: #00ff00;
-            cursor: pointer;
-            font-size: 18px;
-        }
-        
-        .close-btn:hover {
-            color: #ff0000;
-        }
-        
-        /* Conteúdo */
-        .content {
-            padding: 20px;
-        }
-        
-        .icon-area {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .icon {
-            font-size: 48px;
-            animation: blink 0.5s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .message {
-            color: #00ff00;
-            text-align: center;
+            font-size: 24px;
             margin-bottom: 20px;
         }
         
-        .message h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
+        p {
+            color: #88ff88;
+            margin: 10px 0;
         }
         
-        .message p {
-            font-size: 13px;
-            margin: 5px 0;
-        }
-        
-        .progress-bar {
-            background: #001a00;
-            border-radius: 5px;
+        .progress {
+            width: 100%;
             height: 20px;
-            margin: 15px 0;
+            background: #001a00;
+            border-radius: 10px;
+            margin: 20px 0;
             overflow: hidden;
         }
         
         .progress-fill {
-            background: #00ff00;
             width: 0%;
             height: 100%;
-            transition: width 0.05s linear;
-        }
-        
-        .details {
-            background: #001a00;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 15px 0;
-            font-size: 11px;
-            color: #88ff88;
-        }
-        
-        .details p {
-            margin: 3px 0;
-        }
-        
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            background: #00ff00;
+            transition: width 0.05s;
         }
         
         button {
             background: #001a00;
             border: 1px solid #00ff00;
             color: #00ff00;
-            padding: 8px 20px;
+            padding: 10px 20px;
             cursor: pointer;
             font-family: monospace;
-            font-weight: bold;
+            margin-top: 20px;
         }
         
         button:hover {
@@ -158,263 +64,44 @@
             color: black;
         }
         
-        /* Texto piscando */
-        .blink-text {
-            animation: textBlink 1s infinite;
+        .blink {
+            animation: blink 1s infinite;
         }
         
-        @keyframes textBlink {
+        @keyframes blink {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        /* Linhas de código caindo (Matrix) */
-        .code-line {
-            position: absolute;
-            color: #00ff00;
-            font-size: 12px;
-            opacity: 0.3;
-            white-space: nowrap;
-            pointer-events: none;
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
 <body>
-    <div class="matrix-bg" id="matrixBg"></div>
-    
-    <div class="hack-box" id="hackBox">
-        <div class="window-title">
-            <span>⚠️ HACKER ALERT ⚠️</span>
-            <span class="close-btn" id="closeBtn">✕</span>
+    <div class="hack-box">
+        <h1>⚠️ HACK DETECTADO ⚠️</h1>
+        <p>Seu dispositivo foi comprometido!</p>
+        <div class="progress">
+            <div class="progress-fill" id="progress"></div>
         </div>
-        
-        <div class="content">
-            <div class="icon-area">
-                <div class="icon">💀</div>
-            </div>
-            
-            <div class="message">
-                <h2>⚠️ VOCÊ FOI HACKEADO ⚠️</h2>
-                <p>Seu dispositivo foi comprometido!</p>
-                <p class="blink-text" id="statusMsg">🔴 HACK EM ANDAMENTO...</p>
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            
-            <div class="details" id="details">
-                <p>📁 Coletando arquivos...</p>
-                <p>🔐 Acessando senhas salvas...</p>
-                <p>📸 Verificando webcam...</p>
-            </div>
-            
-            <div class="buttons">
-                <button id="okBtn" style="display: none;">OK</button>
-                <button id="cancelBtn" style="display: none;">CANCELAR</button>
-            </div>
-        </div>
+        <p id="status" class="blink">🔴 HACK EM ANDAMENTO...</p>
+        <button id="okBtn" style="display: none;" onclick="fechar()">OK</button>
     </div>
 
     <script>
         let progress = 0;
-        let interval;
-        let step = 0;
-        
-        const messages = [
-            "📁 Coletando arquivos do sistema...",
-            "🔐 Acessando senhas salvas no navegador...",
-            "📸 Verificando acesso à webcam...",
-            "📤 Enviando dados para servidor remoto...",
-            "💰 Verificando carteiras de criptomoedas...",
-            "📱 Acessando mensagens e contatos...",
-            "🔓 Descriptografando arquivos pessoais...",
-            "💀 HACK CONCLUÍDO! DADOS COMPROMETIDOS!"
-        ];
-        
-        const detailsMsgs = [
-            ["📁 Coletando arquivos...", "🔐 Acessando senhas...", "📸 Verificando webcam..."],
-            ["📁 1.247 arquivos encontrados", "🔐 38 senhas capturadas", "📸 Webcam: ACESSADA"],
-            ["📤 Enviando pacote 1/3", "📤 Enviando pacote 2/3", "📤 Enviando pacote 3/3"],
-            ["💰 0.034 BTC encontrado", "💰 Transferência autorizada", "⚠️ Carteira vazia"],
-            ["📱 Contatos: 247", "📱 Mensagens: 1.892", "📱 Backup criado"],
-            ["🔓 Arquivos pessoais", "🔓 Documentos bancários", "🔓 Fotos e vídeos"],
-            ["💀 Upload concluído", "💀 Dados enviados", "💀 Acesso remoto ativado"]
-        ];
-        
-        const statusMsgs = [
-            "🟡 ESCANEANDO SISTEMA...",
-            "🟠 ACESSANDO DADOS...",
-            "🔴 ENVIANDO PARA SERVIDOR...",
-            "💀 HACK CONCLUÍDO!"
-        ];
-        
-        function updateProgress() {
-            interval = setInterval(() => {
-                progress += 2;
-                document.getElementById('progressFill').style.width = progress + '%';
-                
-                // Mudar mensagem a cada 15%
-                if (progress >= 15 && step === 0) {
-                    step = 1;
-                    updateMessages(1);
-                    document.getElementById('statusMsg').innerHTML = statusMsgs[1];
-                } else if (progress >= 40 && step === 1) {
-                    step = 2;
-                    updateMessages(2);
-                    document.getElementById('statusMsg').innerHTML = statusMsgs[2];
-                } else if (progress >= 70 && step === 2) {
-                    step = 3;
-                    updateMessages(3);
-                    document.getElementById('statusMsg').innerHTML = statusMsgs[3];
-                } else if (progress >= 95 && step === 3) {
-                    step = 4;
-                    finalize();
-                }
-                
-                // Atualizar detalhes a cada 10%
-                if (progress % 10 === 0 && progress < 95) {
-                    updateDetails();
-                }
-            }, 80);
-        }
-        
-        function updateMessages(level) {
-            const detailsDiv = document.getElementById('details');
-            detailsDiv.innerHTML = '';
-            for (let i = 0; i < 3; i++) {
-                const p = document.createElement('p');
-                p.innerHTML = detailsMsgs[level][i] || detailsMsgs[level][0];
-                detailsDiv.appendChild(p);
-            }
-        }
-        
-        function updateDetails() {
-            const randomMsg = [
-                "⚠️ Acesso não autorizado detectado",
-                "🔓 Firewall desativado",
-                "📡 Conexão com servidor estabelecida",
-                "💀 Backdoor instalado",
-                "🔄 Sincronizando dados...",
-                "📊 47% concluído",
-                "⚡ Forçando acesso root"
-            ];
+        const interval = setInterval(() => {
+            progress += 2;
+            document.getElementById('progress').style.width = progress + '%';
             
-            const detailsDiv = document.getElementById('details');
-            const newMsg = document.createElement('p');
-            newMsg.innerHTML = randomMsg[Math.floor(Math.random() * randomMsg.length)];
-            newMsg.style.color = '#88ff88';
-            detailsDiv.appendChild(newMsg);
-            detailsDiv.scrollTop = detailsDiv.scrollHeight;
-            
-            // Limitar a 8 linhas
-            while (detailsDiv.children.length > 8) {
-                detailsDiv.removeChild(detailsDiv.firstChild);
-            }
-        }
-        
-        function finalize() {
-            clearInterval(interval);
-            
-            document.getElementById('statusMsg').innerHTML = "💀 SISTEMA COMPROMETIDO! 💀";
-            document.getElementById('statusMsg').style.color = "#ff4444";
-            
-            const detailsDiv = document.getElementById('details');
-            detailsDiv.innerHTML = '';
-            const finalMsg = [
-                "💀 HACK CONCLUÍDO COM SUCESSO!",
-                "📁 SEUS DADOS FORAM COPIADOS",
-                "🔐 SUAS SENHAS ESTÃO COMPROMETIDAS",
-                "😂 BRINCADEIRA! NADA FOI HACKEADO!",
-                "✅ SEU DISPOSITIVO ESTÁ SEGURO"
-            ];
-            
-            for (let msg of finalMsg) {
-                const p = document.createElement('p');
-                p.innerHTML = msg;
-                if (msg.includes("BRINCADEIRA")) {
-                    p.style.color = "#00ff00";
-                    p.style.fontWeight = "bold";
-                }
-                detailsDiv.appendChild(p);
-            }
-            
-            // Mostrar botões
-            setTimeout(() => {
+            if (progress >= 100) {
+                clearInterval(interval);
+                document.getElementById('status').innerHTML = '😂 BRINCADEIRA! Nada foi hackeado!';
+                document.getElementById('status').style.color = '#00ff00';
                 document.getElementById('okBtn').style.display = 'inline-block';
-                document.getElementById('cancelBtn').style.display = 'inline-block';
-            }, 500);
-        }
-        
-        function closeBox() {
-            const box = document.getElementById('hackBox');
-            box.style.animation = 'fadeOut 0.3s ease';
-            setTimeout(() => {
-                box.style.display = 'none';
-                // Opcional: redirecionar ou mostrar mensagem final
-                document.body.innerHTML = '<div style="background:black; color:#00ff00; height:100vh; display:flex; align-items:center; justify-content:center; font-family:monospace; text-align:center;"><div><h1>😂 FOI SÓ UMA BRINCADEIRA! 😂</h1><p style="margin-top:20px;">Nenhum dado foi hackeado.<br>Seu dispositivo está seguro.</p><button onclick="location.reload()" style="margin-top:30px; background:#00ff00; color:black; border:none; padding:10px 20px; cursor:pointer;">FECHAR</button></div></div>';
-            }, 300);
-        }
-        
-        // Efeito Matrix de código caindo
-        function createMatrixEffect() {
-            const bg = document.getElementById('matrixBg');
-            for (let i = 0; i < 50; i++) {
-                const line = document.createElement('div');
-                line.className = 'code-line';
-                line.innerHTML = Math.random().toString(36).substring(2, 10);
-                line.style.left = Math.random() * 100 + '%';
-                line.style.top = Math.random() * 100 + '%';
-                line.style.animation = `fall ${2 + Math.random() * 3}s linear infinite`;
-                line.style.animationDelay = Math.random() * 5 + 's';
-                bg.appendChild(line);
             }
+        }, 80);
+        
+        function fechar() {
+            document.body.innerHTML = '<div style="background:black; color:#00ff00; height:100vh; display:flex; align-items:center; justify-content:center; font-family:monospace; text-align:center;"><div><h1>😂 FOI SÓ UMA BRINCADEIRA! 😂</h1><p>Nenhum dado foi hackeado.<br>Seu dispositivo está seguro.</p></div></div>';
         }
-        
-        // Adicionar CSS para animação de queda
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fall {
-                0% { transform: translateY(-100px); opacity: 0; }
-                10% { opacity: 0.5; }
-                90% { opacity: 0.5; }
-                100% { transform: translateY(1000px); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Eventos
-        document.getElementById('closeBtn').onclick = closeBox;
-        document.getElementById('okBtn').onclick = closeBox;
-        document.getElementById('cancelBtn').onclick = closeBox;
-        
-        // Iniciar
-        createMatrixEffect();
-        updateProgress();
-        
-        // Arrastar a janela
-        let drag = false;
-        let offsetX, offsetY;
-        const box = document.getElementById('hackBox');
-        const titleBar = document.querySelector('.window-title');
-        
-        titleBar.onmousedown = (e) => {
-            drag = true;
-            offsetX = e.clientX - box.offsetLeft;
-            offsetY = e.clientY - box.offsetTop;
-        };
-        
-        document.onmousemove = (e) => {
-            if (drag) {
-                box.style.position = 'absolute';
-                box.style.left = (e.clientX - offsetX) + 'px';
-                box.style.top = (e.clientY - offsetY) + 'px';
-            }
-        };
-        
-        document.onmouseup = () => {
-            drag = false;
-        };
     </script>
 </body>
 </html>
